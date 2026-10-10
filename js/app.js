@@ -21,35 +21,24 @@
     submit: "تسليم الاختبار",
     start: "بدء الاختبار",
     "nav-lesson": "قائمة الشرح",
-    "nav-compass": "قائمة البوصلة",
     "nav-exam": "قائمة الاختبار",
     medal: "بطاقة طريقة",
-    compass: "بوصلة التمييز",
+    "go-exam": "الانتقال إلى الاختبار",
     "review-lesson": "العودة للشرح",
     retry: "محاولة جديدة",
     confirm: "تأكيد التسليم",
     cancel: "مراجعة الإجابات"
   };
-  var COMPASS = [
-    { q: "هل طُرح سؤال على أحد؟", yes: 1, no: "observation" },
-    { q: "هل الحوار فردي، وجهاً لوجه، وعميق في تفاصيل العمل؟", yes: "interviews", no: 2 },
-    { q: "هل اجتمعت مجموعة ذات اهتمام متشابه لتُسأل معاً في جلسة واحدة؟", yes: "focus", no: 3 },
-    { q: "هل الأداة نموذجاً منظماً ومقنناً بمقياس رقمي يتحول إلى إحصاءات؟", yes: "questionnaires", no: "polls" }
-  ];
-
   var QUIZ = window.QUIZ || [];
   var advanceTimer = 0;
   var nameInput = document.getElementById("student-name");
   var classInput = document.getElementById("student-class");
   var root = document.getElementById("exam-root");
   var clock = document.getElementById("live-clock");
-  var compassCard = document.getElementById("compass-card");
-  var compassStep = 0;
   var hiddenMark = 0;
   var state = blankState();
 
   restore();
-  renderCompass();
   render();
   bind();
 
@@ -460,7 +449,6 @@
       }
     }, 1000);
     root.addEventListener("click", onExamClick);
-    compassCard.addEventListener("click", onCompassClick);
     initUnits();
   }
 
@@ -512,14 +500,7 @@
         document.getElementById("lesson").scrollIntoView({ behavior: "smooth" });
       });
     }
-    var compassLink = document.querySelector("[data-track=nav-compass]");
-    if (compassLink) {
-      compassLink.addEventListener("click", function (event) {
-        if (studyReady) return;
-        event.preventDefault();
-        document.getElementById("lesson").scrollIntoView({ behavior: "smooth" });
-      });
-    }
+    document.getElementById("go-exam").addEventListener("click", openExam);
     if (studyReady || state.phase === "exam" || state.phase === "result") openExam();
     else showUnit(isFinite(savedUnit) ? savedUnit : 0);
   }
@@ -539,7 +520,7 @@
       unit.style.removeProperty("display");
     });
     document.getElementById("ready").hidden = true;
-    document.getElementById("compass").hidden = true;
+    document.getElementById("to-exam").hidden = true;
     document.getElementById("exam").hidden = true;
     document.getElementById("unit-bar").hidden = false;
     document.getElementById("unit-count").textContent = "الطريقة " + (unitIndex + 1) + " من " + list.length;
@@ -559,7 +540,7 @@
     });
     document.getElementById("unit-bar").hidden = true;
     document.getElementById("ready").hidden = false;
-    document.getElementById("compass").hidden = false;
+    document.getElementById("to-exam").hidden = false;
     document.getElementById("exam").hidden = true;
     state.readPercent = 100;
     document.getElementById("ready").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -574,70 +555,10 @@
     });
     document.getElementById("unit-bar").hidden = true;
     document.getElementById("ready").hidden = true;
-    document.getElementById("compass").hidden = true;
+    document.getElementById("to-exam").hidden = true;
     document.getElementById("exam").hidden = false;
     state.readPercent = 100;
     document.getElementById("exam").scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  function renderCompass() {
-    compassCard.innerHTML = "";
-    var step = COMPASS[compassStep];
-    if (!step) {
-      var method = COMPASS._picked;
-      var h = document.createElement("h3");
-      h.textContent = methodName(method);
-      var p = document.createElement("p");
-      p.textContent = WHY[method] || "";
-      var btn = document.createElement("button");
-      btn.className = "btn primary";
-      btn.type = "button";
-      btn.setAttribute("data-track", "compass");
-      btn.setAttribute("data-act", "reset");
-      btn.textContent = "جرّب حالة أخرى";
-      compassCard.appendChild(h);
-      compassCard.appendChild(p);
-      compassCard.appendChild(btn);
-      return;
-    }
-    var q = document.createElement("h3");
-    q.textContent = step.q;
-    var box = document.createElement("div");
-    box.className = "yesno";
-    box.appendChild(compassButton("نعم", "yes"));
-    box.appendChild(compassButton("لا", "no"));
-    compassCard.appendChild(q);
-    compassCard.appendChild(box);
-  }
-
-  function compassButton(label, act) {
-    var btn = document.createElement("button");
-    btn.className = "btn" + (act === "yes" ? " primary" : "");
-    btn.type = "button";
-    btn.setAttribute("data-track", "compass");
-    btn.setAttribute("data-act", act);
-    btn.textContent = label;
-    return btn;
-  }
-
-  function onCompassClick(e) {
-    var btn = e.target.closest("[data-act]");
-    if (!btn) return;
-    if (btn.getAttribute("data-act") === "reset") {
-      compassStep = 0;
-      COMPASS._picked = "";
-      renderCompass();
-      return;
-    }
-    var step = COMPASS[compassStep];
-    var next = step[btn.getAttribute("data-act")];
-    if (typeof next === "number") {
-      compassStep = next;
-    } else {
-      COMPASS._picked = next;
-      compassStep = COMPASS.length;
-    }
-    renderCompass();
   }
 
   function render() {

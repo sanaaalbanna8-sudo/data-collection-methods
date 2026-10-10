@@ -215,14 +215,15 @@ figure { margin: 0; position: relative; }
 .panel.poll { border-top: 6px solid var(--poll); }
 .panel.quest { border-top: 6px solid var(--quest); }
 
-.compass-card, .qcard, .gate, .result {
+.to-exam { text-align: center; padding: 8px 0 40px; }
+.to-exam .btn { min-width: 240px; padding: 14px 28px; font-size: 1.12rem; }
+.qcard, .gate, .result {
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 30px;
   box-shadow: var(--shadow);
   padding: 22px;
 }
-.compass { padding-bottom: 30px; }
 .yesno { display: flex; gap: 10px; margin-top: 16px; }
 .choice-list { display: grid; gap: 10px; margin: 16px 0; }
 .choice {
