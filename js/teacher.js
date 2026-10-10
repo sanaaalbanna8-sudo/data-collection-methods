@@ -83,7 +83,7 @@
           "الاسم": pack.name || "",
           "رقم السؤال": row.n,
           "نص السؤال": row.text || "",
-          "إجابة الطالبة": row.chosen || "بدون إجابة",
+          "إجابة الطالب": row.chosen || "بدون إجابة",
           "الإجابة الصحيحة": row.correct || "",
           "سبب التصنيف": row.why || ""
         });
@@ -129,7 +129,7 @@
       delete window[cb];
       form.hidden = false;
       board.hidden = true;
-      lockHint.textContent = "تعذّر الاتصال. تأكدي من رابط /exec.";
+      lockHint.textContent = "تعذّر الاتصال. تأكد من رابط /exec.";
     };
     document.body.appendChild(script);
     window.clearTimeout(refreshTimer);
@@ -150,7 +150,7 @@
     var clicks = 0;
     summary.forEach(function (row) {
       clicks += num(row["عدد النقرات"]);
-      if (String(row["الحالة"] || "") === "أنهت") {
+      if (String(row["الحالة"] || "") === "أنهى") {
         done += 1;
         score += num(row["الدرجة"]);
         scored += 1;
@@ -184,14 +184,14 @@
       });
     }
     mistakeTitle.textContent = picked ? "أخطاء المحاولة المحددة" : "كل الأخطاء";
-    var mcols = ["الاسم", "رقم السؤال", "نص السؤال", "إجابة الطالبة", "الإجابة الصحيحة", "سبب التصنيف"];
+    var mcols = ["الاسم", "رقم السؤال", "نص السؤال", "إجابة الطالب", "الإجابة الصحيحة", "سبب التصنيف"];
     mistakesEl.innerHTML = "";
     selected.forEach(function (row) {
       var tr = document.createElement("tr");
       mcols.forEach(function (key) {
         var td = document.createElement("td");
         td.textContent = row[key] == null ? "" : String(row[key]);
-        if (key === "إجابة الطالبة") td.className = "bad";
+        if (key === "إجابة الطالب") td.className = "bad";
         tr.appendChild(td);
       });
       mistakesEl.appendChild(tr);

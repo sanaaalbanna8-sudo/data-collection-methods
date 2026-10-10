@@ -4,11 +4,11 @@
  * الجدول مرتبط مسبقاً:
  * https://docs.google.com/spreadsheets/d/1ZxZ1dS7X-DXbSQbnT_JucTbaWkcPj7xuch0yPqmMBqg/edit
  *
- * 1. من الجدول: الإضافات ← Apps Script، والصقي هذا الملف مكان Code.gs.
- * 2. انشري: تطبيق ويب، التنفيذ: أنا، الوصول: أي شخص.
- * 3. الصقي رابط /exec في js/config.js عند sheetsUrl.
+ * 1. من الجدول: الإضافات ← Apps Script، والصق هذا الملف مكان Code.gs.
+ * 2. انشر: تطبيق ويب، التنفيذ: أنا، الوصول: أي شخص.
+ * 3. الصق رابط /exec في js/config.js عند sheetsUrl.
  *
- * لوحة المعلمة: teacher.html
+ * لوحة المعلم: teacher.html
  * مفتاح الدخول: sanaa21
  *
  * الأوراق التي تُنشأ تلقائياً:
@@ -31,13 +31,13 @@ var HEAD_SUMMARY = [
 
 var HEAD_ANSWERS = [
   "معرّف المحاولة", "الاسم", "الشعبة", "رقم السؤال", "نص السؤال",
-  "إجابة الطالبة", "الإجابة الصحيحة", "النتيجة",
+  "إجابة الطالب", "الإجابة الصحيحة", "النتيجة",
   "ثواني السؤال", "نقرات السؤال", "تغييرات السؤال", "سبب التصنيف"
 ];
 
 var HEAD_MISTAKES = [
   "معرّف المحاولة", "الاسم", "الشعبة", "رقم السؤال", "نص السؤال",
-  "إجابة الطالبة", "الإجابة الصحيحة", "النتيجة", "سبب التصنيف"
+  "إجابة الطالب", "الإجابة الصحيحة", "النتيجة", "سبب التصنيف"
 ];
 
 var HEAD_CLICKS = [
@@ -81,13 +81,13 @@ function detailsAllowed_(ss, data) {
   if (!sh) return true;
   var row = findRow_(sh, data.sessionId);
   if (!row) return true;
-  return String(sh.getRange(row, 4).getValue() || "") !== "أنهت";
+  return String(sh.getRange(row, 4).getValue() || "") !== "أنهى";
 }
 
 function openSheet_() {
   if (SHEET_ID) return SpreadsheetApp.openById(SHEET_ID);
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  if (!ss) throw new Error("اربطي السكربت بالجدول");
+  if (!ss) throw new Error("اربط السكربت بالجدول");
   return ss;
 }
 
@@ -99,7 +99,7 @@ function writeSummary_(ss, data) {
     var statusCol = map["الحالة"] || 4;
     var seenCol = map["آخر ظهور"] || 26;
     var status = String(sh.getRange(existing, statusCol).getValue() || "");
-    if (status === "أنهت") {
+    if (status === "أنهى") {
       if (seenCol) sh.getRange(existing, seenCol).setValue(data.lastSeen || "");
       return;
     }
@@ -110,7 +110,7 @@ function writeSummary_(ss, data) {
 }
 
 function summaryRow_(data) {
-  var finished = String(data.event || "") === "submit" || String(data.status || "") === "أنهت";
+  var finished = String(data.event || "") === "submit" || String(data.status || "") === "أنهى";
   return [
     data.sessionId || "",
     data.name || "",

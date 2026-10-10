@@ -282,7 +282,7 @@
       sessionId: state.sessionId,
       name: studentName(),
       klass: classInput.value.trim(),
-      status: finished ? "أنهت" : (state.examStart ? "داخل الاختبار" : "تقرأ الشرح"),
+      status: finished ? "أنهى" : (state.examStart ? "داخل الاختبار" : "يقرأ الشرح"),
       grade: finished ? gradeOf(percent) : "",
       score: finished ? correct : "",
       total: QUIZ.length,
@@ -328,7 +328,7 @@
     var found = false;
     for (var i = 0; i < all.length; i++) {
       if (all[i].sessionId === pack.sessionId) {
-        if (all[i].status === "أنهت" && pack.status !== "أنهت") return;
+        if (all[i].status === "أنهى" && pack.status !== "أنهى") return;
         all[i] = pack;
         found = true;
       }
@@ -461,6 +461,114 @@
     }, 1000);
     root.addEventListener("click", onExamClick);
     compassCard.addEventListener("click", onCompassClick);
+    initUnits();
+  }
+
+  var unitIndex = 0;
+  var studyReady = false;
+  var units = [];
+
+  function initUnits() {
+    units = Array.prototype.slice.call(document.querySelectorAll("#lesson .method"));
+    var savedUnit = 0;
+    try { savedUnit = Number(sessionStorage.getItem("dm-unit") || 0); } catch (err) {}
+    if (sessionStorage.getItem("dm-ready") === "1") studyReady = true;
+    document.getElementById("unit-prev").addEventListener("click", function () { showUnit(unitIndex - 1); });
+    document.getElementById("unit-next").addEventListener("click", function () {
+      if (unitIndex < units.length - 1) showUnit(unitIndex + 1);
+      else showReady();
+    });
+    document.getElementById("ready-yes").addEventListener("click", openExam);
+    document.getElementById("ready-no").addEventListener("click", function () {
+      var hint = document.getElementById("unit-hint");
+      showUnit(0);
+      if (hint) hint.textContent = "اقرأ الطرق بهدوء وركز في العلامات، ثم عد عندما تكون مستعداً.";
+    });
+    document.querySelectorAll(".medal").forEach(function (link, index) {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        showUnit(index);
+      });
+    });
+    var examLink = document.querySelector("[data-track=nav-exam]");
+    if (examLink) {
+      examLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (studyReady || state.examStart || state.phase === "result" || state.phase === "exam") {
+          openExam();
+          return;
+        }
+        var hint = document.getElementById("unit-hint");
+        if (hint) hint.textContent = "أكمل قراءة الطرق الخمس أولاً، ثم قرر إن كنت مستعداً.";
+        document.getElementById("lesson").scrollIntoView({ behavior: "smooth" });
+      });
+    }
+    var compassLink = document.querySelector("[data-track=nav-compass]");
+    if (compassLink) {
+      compassLink.addEventListener("click", function (event) {
+        if (studyReady) return;
+        event.preventDefault();
+        document.getElementById("lesson").scrollIntoView({ behavior: "smooth" });
+      });
+    }
+    if (studyReady || state.phase === "exam" || state.phase === "result") openExam();
+    else showUnit(isFinite(savedUnit) ? savedUnit : 0);
+  }
+
+  function showUnit(index) {
+    if (!units.length) return;
+    unitIndex = Math.max(0, Math.min(units.length - 1, index));
+    var reviewing = !!(state.examStart || state.phase === "result");
+    if (!reviewing) {
+      studyReady = false;
+      try { sessionStorage.removeItem("dm-ready"); } catch (err) {}
+    }
+    try { sessionStorage.setItem("dm-unit", String(unitIndex)); } catch (err2) {}
+    units.forEach(function (unit, i) {
+      var on = i === unitIndex;
+      unit.classList.toggle("is-current", on);
+      unit.style.display = on ? "grid" : "none";
+    });
+    document.getElementById("ready").hidden = true;
+    document.getElementById("compass").hidden = true;
+    document.getElementById("exam").hidden = true;
+    document.getElementById("unit-bar").hidden = false;
+    document.getElementById("unit-count").textContent = "الطريقة " + (unitIndex + 1) + " من " + units.length;
+    document.getElementById("unit-prev").disabled = unitIndex === 0;
+    var next = document.getElementById("unit-next");
+    next.textContent = unitIndex === units.length - 1 ? "أنهيت القراءة" : "الطريقة التالية";
+    var seen = Math.round(((unitIndex + 1) / units.length) * 100);
+    if (seen > state.readPercent) state.readPercent = seen;
+    document.getElementById("lesson").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function showReady() {
+    studyReady = false;
+    units.forEach(function (unit) {
+      unit.classList.remove("is-current");
+      unit.style.display = "none";
+    });
+    document.getElementById("unit-bar").hidden = true;
+    document.getElementById("ready").hidden = false;
+    document.getElementById("compass").hidden = false;
+    document.getElementById("exam").hidden = true;
+    state.readPercent = 100;
+    document.getElementById("ready").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function openExam() {
+    studyReady = true;
+    try { sessionStorage.setItem("dm-ready", "1"); } catch (err) {}
+    units.forEach(function (unit) {
+      unit.classList.remove("is-current");
+      unit.style.display = "none";
+    });
+    document.getElementById("unit-bar").hidden = true;
+    document.getElementById("ready").hidden = true;
+    document.getElementById("compass").hidden = true;
+    document.getElementById("exam").hidden = false;
+    state.readPercent = 100;
+    document.getElementById("exam").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function renderCompass() {
@@ -477,7 +585,7 @@
       btn.type = "button";
       btn.setAttribute("data-track", "compass");
       btn.setAttribute("data-act", "reset");
-      btn.textContent = "جرّبي حالة أخرى";
+      btn.textContent = "جرّب حالة أخرى";
       compassCard.appendChild(h);
       compassCard.appendChild(p);
       compassCard.appendChild(btn);
@@ -538,7 +646,7 @@
     var card = document.createElement("div");
     card.className = "gate";
     var p = document.createElement("p");
-    p.textContent = "اكتبي اسمك في أعلى الصفحة، ثم ابدئي. يمكنك الرجوع إلى الشرح أثناء الاختبار، ويُحسب الوقت من لحظة البدء حتى التسليم.";
+    p.textContent = "اكتب اسمك في أعلى الصفحة، ثم ابدأ. يمكنك الرجوع إلى الشرح أثناء الاختبار، ويُحسب الوقت من لحظة البدء حتى التسليم.";
     var hint = document.createElement("p");
     hint.className = "hint";
     hint.id = "gate-hint";
@@ -547,7 +655,7 @@
     btn.type = "button";
     btn.setAttribute("data-track", "start");
     btn.setAttribute("data-act", "start");
-    btn.textContent = "ابدئي الاختبار";
+    btn.textContent = "ابدأ الاختبار";
     card.appendChild(p);
     card.appendChild(hint);
     card.appendChild(btn);
@@ -658,8 +766,8 @@
     p.textContent = "تسليم الإجابات الخمسين الآن؟";
     var actions = document.createElement("div");
     actions.className = "yesno";
-    actions.appendChild(actionButton("نعم، سلّمي", "confirm", "primary", false));
-    actions.appendChild(actionButton("راجعي الإجابات", "cancel", "ghost", false));
+    actions.appendChild(actionButton("نعم، سلّم", "confirm", "primary", false));
+    actions.appendChild(actionButton("راجع الإجابات", "cancel", "ghost", false));
     box.appendChild(p);
     box.appendChild(actions);
     return box;
@@ -698,7 +806,7 @@
   function startExam() {
     if (!studentName()) {
       var hint = document.getElementById("gate-hint");
-      if (hint) hint.textContent = "اكتبي اسمك في أعلى الصفحة أولاً.";
+      if (hint) hint.textContent = "اكتب اسمك في أعلى الصفحة أولاً.";
       nameInput.focus();
       return;
     }
@@ -736,7 +844,7 @@
     if (requireAnswer && !state.qState[state.index].chosen) {
       var hint = document.getElementById("q-hint");
       var card = document.getElementById("qcard");
-      if (hint) hint.textContent = "اختاري إجابة قبل المتابعة. يمكنك التنقل من الأرقام إن أردتِ العودة لاحقاً.";
+      if (hint) hint.textContent = "اختر إجابة قبل المتابعة. يمكنك التنقل من الأرقام إن أردت العودة لاحقاً.";
       if (card) {
         card.classList.remove("shake");
         void card.offsetWidth;

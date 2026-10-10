@@ -22,7 +22,7 @@
       <a href="#exam" data-track="nav-exam">الاختبار</a>
     </nav>
     <form class="who" id="who">
-      <input id="student-name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="اسم الطالبة" required>
+      <input id="student-name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="اسم الطالب" required>
       <input id="student-class" name="klass" type="text" maxlength="40" placeholder="الشعبة">
       <span class="live-clock" id="live-clock" hidden>0:00</span>
     </form>
@@ -68,7 +68,15 @@
       <div class="section-head">
         <p class="kicker">الجزء الأول · الشرح</p>
         <h2>كيف تُجمع البيانات؟</h2>
-        <p>اقرئي كل طريقة، ثم لاحظي العلامة التي تميّزها. هذه العلامات هي مفتاح التصنيف في الاختبار.</p>
+        <p>اقرأ كل طريقة وحدها. بعد الطرق الخمس تقرر إن كنت مستعداً للأسئلة.</p>
+      </div>
+      <div class="unit-bar" id="unit-bar">
+        <p id="unit-count">الطريقة 1 من 5</p>
+        <div class="pager">
+          <button class="btn ghost" id="unit-prev" type="button" data-track="unit-prev">الطريقة السابقة</button>
+          <button class="btn primary" id="unit-next" type="button" data-track="unit-next">الطريقة التالية</button>
+        </div>
+        <p class="hint" id="unit-hint"></p>
       </div>
 
       <article class="method" id="m-observation" style="--c:#1d6f93">
@@ -181,6 +189,18 @@
         </figure>
       </article>
 
+    </section>
+
+    <section class="ready wrap" id="ready" hidden>
+      <div class="gate">
+        <p class="kicker">بعد قراءة الطرق الخمس</p>
+        <h2>هل أنت مستعد؟</h2>
+        <p>هل أنت مستعد للإجابة عن أسئلة تتعلق بجمع البيانات؟ خذ وقتك في قراءة المعلومات والتركيز عليها قبل أن تبدأ.</p>
+        <div class="yesno">
+          <button class="btn primary" id="ready-yes" type="button" data-track="ready-yes">نعم، أنا مستعد</button>
+          <button class="btn" id="ready-no" type="button" data-track="ready-no">لا، أراجع الطرق مرة أخرى</button>
+        </div>
+      </div>
       <div class="split">
         <article class="panel poll">
           <h3>استطلاع الرأي</h3>
@@ -193,19 +213,19 @@
       </div>
     </section>
 
-    <section class="compass wrap" id="compass">
+    <section class="compass wrap" id="compass" hidden>
       <div class="section-head">
         <p class="kicker">تدريب قصير</p>
         <h2>بوصلة التمييز</h2>
-        <p>أجيبي عن الأسئلة ليظهر اسم الطريقة. هذا تدريب قبل الاختبار، ويمكنك إعادته كما تشائين.</p>
+        <p>أجب عن الأسئلة ليظهر اسم الطريقة. هذا تدريب قبل الاختبار، ويمكنك إعادته كما تشاء.</p>
       </div>
       <div class="compass-card" id="compass-card"></div>
     </section>
 
-    <section class="exam-wrap wrap" id="exam">
+    <section class="exam-wrap wrap" id="exam" hidden>
       <div class="section-head">
         <p class="kicker">الجزء الثاني · الاختبار</p>
-        <h2>صنّفي الحالة</h2>
+        <h2>صنّف الحالة</h2>
       </div>
       <div id="exam-root"></div>
     </section>
