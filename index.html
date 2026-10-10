@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>طرق جمع البيانات | أنظمة تكنولوجيا المعلومات</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect rx='8' width='32' height='32' fill='%2316324f'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23c6a15b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#hero">
+      <small>أنظمة تكنولوجيا المعلومات</small>
+      <strong>طرق جمع البيانات</strong>
+    </a>
+    <nav class="nav">
+      <a href="#lesson" data-track="nav-lesson">الشرح</a>
+      <a href="#compass" data-track="nav-compass">بوصلة التمييز</a>
+      <a href="#exam" data-track="nav-exam">الاختبار</a>
+    </nav>
+    <form class="who" id="who">
+      <input id="student-name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="اسم الطالبة" required>
+      <input id="student-class" name="klass" type="text" maxlength="40" placeholder="الشعبة">
+      <span class="live-clock" id="live-clock" hidden>0:00</span>
+    </form>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="kicker">الاستراتيجية والإدارة والبنية الأساسية</p>
+          <h1>خمسة طرق لجمع الحقائق قبل تصميم أي نظام</h1>
+          <p class="lede">يراقب محلل النظم السلوك، أو يسأل بسرعة، أو يقيس بنموذج مقنن، أو يحاور مجموعة، أو يجلس مع شخص واحد حتى تتضح تفاصيل العمل.</p>
+        </div>
+        <div class="hero-visual">
+          <img src="images/hero.jpg" alt="حاسوب تتصل به خمس لوحات تمثل طرق جمع البيانات">
+        </div>
+      </div>
+      <div class="medals">
+        <a class="medal" href="#m-observation" data-method="observation" data-track="medal">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="32" rx="22" ry="13" fill="none" stroke="currentColor" stroke-width="2.4"/><circle class="pupil" cx="32" cy="32" r="5" fill="currentColor"/><rect class="scan" x="14" y="31" width="36" height="2.5" rx="1" fill="currentColor"/></svg>
+          <span>الملاحظات</span>
+        </a>
+        <a class="medal" href="#m-polls" data-method="polls" data-track="medal">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6"><polygon class="star" points="12,26 14.6,32 21,32.4 16.2,36.4 17.8,42.6 12,39 6.2,42.6 7.8,36.4 3,32.4 9.4,32"/><polygon class="star" points="32,16 35.2,24 44,24.6 37.4,30 39.6,38.4 32,33.8 24.4,38.4 26.6,30 20,24.6 28.8,24"/><polygon class="star" points="52,26 54.6,32 61,32.4 56.2,36.4 57.8,42.6 52,39 46.2,42.6 47.8,36.4 43,32.4 49.4,32"/></g></svg>
+          <span>استطلاعات الرأي</span>
+        </a>
+        <a class="medal" href="#m-questionnaires" data-method="questionnaires" data-track="medal">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="currentColor"><rect class="grow" x="10" y="34" width="8" height="18" rx="2"/><rect class="grow" x="24" y="26" width="8" height="26" rx="2"/><rect class="grow" x="38" y="16" width="8" height="36" rx="2"/><rect class="grow" x="52" y="22" width="8" height="30" rx="2"/></g></svg>
+          <span>الاستبيانات</span>
+        </a>
+        <a class="medal" href="#m-focus" data-method="focus" data-track="medal">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><path class="link-arc" d="M16 40 C24 18, 40 18, 48 40"/><circle cx="16" cy="42" r="5" fill="currentColor" stroke="none"/><circle cx="32" cy="18" r="5" fill="currentColor" stroke="none"/><circle cx="48" cy="42" r="5" fill="currentColor" stroke="none"/></g></svg>
+          <span>مجموعات التركيز</span>
+        </a>
+        <a class="medal" href="#m-interviews" data-method="interviews" data-track="medal">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="16" cy="28" r="6" fill="currentColor"/><circle cx="48" cy="28" r="6" fill="currentColor"/><path class="wave" d="M22 30 C28 22, 36 38, 42 30" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+          <span>المقابلات المباشرة</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="lesson wrap" id="lesson">
+      <div class="section-head">
+        <p class="kicker">الجزء الأول · الشرح</p>
+        <h2>كيف تُجمع البيانات؟</h2>
+        <p>اقرئي كل طريقة، ثم لاحظي العلامة التي تميّزها. هذه العلامات هي مفتاح التصنيف في الاختبار.</p>
+      </div>
+
+      <article class="method" id="m-observation" style="--c:#1d6f93">
+        <div class="method-copy">
+          <p class="en">Observations</p>
+          <h2>الملاحظات</h2>
+          <h3>مفهومها</h3>
+          <p>طريقة نوعية يراقب فيها الباحثون سلوكيات وأفعال الأفراد مباشرة دون سؤالهم.</p>
+          <h3>متى تُستخدم؟</h3>
+          <p>لجمع بيانات سلوكية دقيقة الحدوث حالياً وبتكلفة منخفضة، ودون إزعاج الأفراد بالأسئلة.</p>
+          <ul class="signs">
+            <li>لا يوجد سؤال</li>
+            <li>السلوك يحدث الآن</li>
+            <li>مراقبة أو تتبع نقرات</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="images/observation.jpg" alt="باحثة تراقب المتسوقين في الممر دون أن تسألهم">
+          <div class="motion-badge" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="22" ry="13" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="32" cy="32" r="5" fill="currentColor"/><rect class="scan" x="14" y="31" width="36" height="2.5" fill="currentColor"/></svg>
+          </div>
+        </figure>
+      </article>
+
+      <article class="method" id="m-polls" style="--c:#b5812f">
+        <div class="method-copy">
+          <p class="en">Polls / Opinion Surveys</p>
+          <h2>استطلاعات الرأي</h2>
+          <h3>مفهومها</h3>
+          <p>أسئلة سريعة تُطرح لمعرفة آراء الأفراد عن منتج أو خدمة، وغالباً عبر الإنترنت أو التطبيقات مثل TripAdvisor.</p>
+          <h3>متى تُستخدم؟</h3>
+          <p>للحصول على آراء سريعة وطواعية من جمهور واسع، وتقييم المنتجات، وتوفير الوقت والمال.</p>
+          <ul class="signs">
+            <li>سؤال سريع</li>
+            <li>نجوم أو نعم / لا</li>
+            <li>تصويت أو منصة آراء</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="images/polls.jpg" alt="هاتف يعرض تقييماً بالنجوم وآراء طوعية">
+          <div class="motion-badge" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><polygon class="star" points="32,10 37,24 52,24 40,33 44,48 32,39 20,48 24,33 12,24 27,24"/></svg>
+          </div>
+        </figure>
+      </article>
+
+      <article class="method" id="m-questionnaires" style="--c:#0f766e">
+        <div class="method-copy">
+          <p class="en">Questionnaires</p>
+          <h2>الاستبيانات</h2>
+          <h3>مفهومها</h3>
+          <p>أسئلة منظمة ومقننة، وغالباً ما تكون قابلة للقياس الكمي، مثل التقييم من 1 إلى 5.</p>
+          <h3>متى تُستخدم؟</h3>
+          <p>لقياس رضا الطلاب أو العملاء بشكل منظم، والحصول على بيانات تتحول إلى أرقام وإحصاءات دقيقة.</p>
+          <ul class="signs">
+            <li>نموذج مقنن</li>
+            <li>مقياس رقمي</li>
+            <li>يصلح للإحصاء</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="images/questionnaire.jpg" alt="نموذج تقييم منظم وإلى جانبه أعمدة إحصائية">
+          <div class="motion-badge" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><g fill="currentColor"><rect class="grow" x="8" y="36" width="8" height="16"/><rect class="grow" x="22" y="26" width="8" height="26"/><rect class="grow" x="36" y="16" width="8" height="36"/><rect class="grow" x="50" y="22" width="8" height="30"/></g></svg>
+          </div>
+        </figure>
+      </article>
+
+      <article class="method" id="m-focus" style="--c:#6a46a8">
+        <div class="method-copy">
+          <p class="en">Focus Groups</p>
+          <h2>مجموعات التركيز</h2>
+          <h3>مفهومها</h3>
+          <p>جمع مجموعة من الأفراد ذوي الاهتمامات المتشابهة معاً، وطرح الأسئلة عليهم في آنٍ واحد.</p>
+          <h3>متى تُستخدم؟</h3>
+          <p>لجمع آراء جماعية متعددة بسرعة، وبسؤال واحد يُطرح على المجموعة. يُنتبه هنا إلى الانحياز الجماعي.</p>
+          <ul class="signs">
+            <li>مجموعة معاً</li>
+            <li>اهتمام متشابه</li>
+            <li>جلسة واحدة</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="images/focus.jpg" alt="ست نساء يتناقشن حول طاولة واحدة">
+          <div class="motion-badge" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><path class="link-arc" d="M12 44 C24 16, 40 16, 52 44" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="46" r="4" fill="currentColor"/><circle cx="32" cy="16" r="4" fill="currentColor"/><circle cx="52" cy="46" r="4" fill="currentColor"/></svg>
+          </div>
+        </figure>
+      </article>
+
+      <article class="method" id="m-interviews" style="--c:#9a4050">
+        <div class="method-copy">
+          <p class="en">Direct Interviews</p>
+          <h2>المقابلات المباشرة</h2>
+          <h3>مفهومها</h3>
+          <p>حوار تفاعلي فردي، وجهاً لوجه، بين الباحث والمشارك للتعمق في الآراء وتوضيح الغموض.</p>
+          <h3>متى تُستخدم؟</h3>
+          <p>حين يحتاج محلل النظم إلى فهم عميق ودقيق للحياة العملية للمستخدم، أو إلى تفاصيل لا تكفيها الأسئلة السطحية.</p>
+          <ul class="signs">
+            <li>شخص واحد</li>
+            <li>وجهاً لوجه</li>
+            <li>تفاصيل العمل العميقة</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="images/interview.jpg" alt="حوار وجهاً لوجه بين محللة ومسؤول على مكتب">
+          <div class="motion-badge" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><circle cx="16" cy="28" r="6" fill="currentColor"/><circle cx="48" cy="28" r="6" fill="currentColor"/><path class="wave" d="M22 30 C28 20, 36 40, 42 30" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+          </div>
+        </figure>
+      </article>
+
+      <div class="split">
+        <article class="panel poll">
+          <h3>استطلاع الرأي</h3>
+          <p>سؤال سريع، أو نجوم وتعليق طوعي، أو تصويت، أو منصة آراء مثل TripAdvisor وFeefo وTrustpilot. الهدف رأي واسع بأقل وقت وكلفة.</p>
+        </article>
+        <article class="panel quest">
+          <h3>الاستبيان</h3>
+          <p>نموذج منظم ومقنن، غالباً بمقياس من 1 إلى 5 أو خيارات دقيقة، حتى تتحول الإجابات إلى أرقام وإحصاءات. التنظيم والقياس هما العلامة.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="compass wrap" id="compass">
+      <div class="section-head">
+        <p class="kicker">تدريب قصير</p>
+        <h2>بوصلة التمييز</h2>
+        <p>أجيبي عن الأسئلة ليظهر اسم الطريقة. هذا تدريب قبل الاختبار، ويمكنك إعادته كما تشائين.</p>
+      </div>
+      <div class="compass-card" id="compass-card"></div>
+    </section>
+
+    <section class="exam-wrap wrap" id="exam">
+      <div class="section-head">
+        <p class="kicker">الجزء الثاني · الاختبار</p>
+        <h2>صنّفي الحالة</h2>
+      </div>
+      <div id="exam-root"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>جميع الحقوق محفوظة © 2026 <b>Sanaa albanna</b></p>
+    <a href="teacher.html">لوحة المعلمة</a>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

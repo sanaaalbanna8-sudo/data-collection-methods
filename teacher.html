@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوحة المعلمة | طرق جمع البيانات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="teacher-body">
+  <header class="teacher-head">
+    <p class="kicker">طرق جمع البيانات</p>
+    <h1>لوحة المعلمة</h1>
+    <p><a id="sheet-link" href="#" target="_blank" rel="noopener">فتح جدول النتائج</a></p>
+  </header>
+
+  <section class="setup" id="setup" hidden>
+    <h2>خطوة واحدة متبقية لوصول النتائج إلى الجدول</h2>
+    <ol>
+      <li>افتحي الجدول من الرابط أعلاه.</li>
+      <li>الإضافات ← Apps Script، ثم الصقي ملف <b>Code.gs</b> من مجلد الصفحة. معرّف الجدول مضبوط داخله.</li>
+      <li>نشر ← تطبيق ويب ← التنفيذ: أنا ← الوصول: أي شخص.</li>
+      <li>الصقي رابط <b>/exec</b> في الملف <b>js/config.js</b> عند <b>sheetsUrl</b>.</li>
+      <li>أعيدي تحميل صفحة الطالبة وهذه اللوحة.</li>
+    </ol>
+    <p>إلى أن يكتمل الربط، تظهر هنا محاولات هذا المتصفح فقط.</p>
+  </section>
+
+  <form class="lock" id="lock-form">
+    <h2>دخول المعلمة</h2>
+    <label>مفتاح اللوحة
+      <input id="teacher-key" type="password" autocomplete="current-password" required>
+    </label>
+    <p class="hint" id="lock-hint"></p>
+    <button class="btn primary" type="submit">دخول</button>
+  </form>
+
+  <section class="board" id="board" hidden>
+    <div class="cards">
+      <article class="card"><span>الطالبات</span><strong id="c-students">0</strong></article>
+      <article class="card"><span>متوسط الدرجة</span><strong id="c-score">0</strong></article>
+      <article class="card"><span>متوسط النقرات</span><strong id="c-clicks">0</strong></article>
+      <article class="card"><span>أنهين الاختبار</span><strong id="c-done">0</strong></article>
+    </div>
+    <p>
+      <input id="search" type="search" placeholder="ابحثي بالاسم أو الشعبة">
+      <span id="status"></span>
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>الاسم</th><th>الشعبة</th><th>الحالة</th><th>الدرجة</th><th>النسبة</th>
+            <th>الخاطئة</th><th>مدة الاختبار</th><th>عدد النقرات</th><th>تغييرات الإجابة</th>
+            <th>وقت قراءة الشرح</th><th>آخر ظهور</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <h2>الأخطاء</h2>
+    <p id="mistake-title">اختاري طالبة من الجدول لعرض أخطائها.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>الاسم</th><th>رقم السؤال</th><th>نص السؤال</th><th>إجابتها</th><th>الصحيح</th><th>السبب</th>
+          </tr>
+        </thead>
+        <tbody id="mistakes"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/teacher.js"></script>
+</body>
+</html>
