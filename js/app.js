@@ -475,12 +475,6 @@
       if (index < list.length - 1) showUnit(index + 1);
       else showReady();
     });
-    document.getElementById("ready-yes").addEventListener("click", openExam);
-    document.getElementById("ready-no").addEventListener("click", function () {
-      var hint = document.getElementById("unit-hint");
-      showUnit(0);
-      if (hint) hint.textContent = "اقرأ الطرق بهدوء وركز في العلامات، ثم عد عندما تكون مستعداً.";
-    });
     document.querySelectorAll(".medal").forEach(function (link, index) {
       link.addEventListener("click", function (event) {
         event.preventDefault();
@@ -496,7 +490,7 @@
           return;
         }
         var hint = document.getElementById("unit-hint");
-        if (hint) hint.textContent = "أكمل قراءة الطرق الخمس أولاً، ثم قرر إن كنت مستعداً.";
+        if (hint) hint.textContent = "أكمل قراءة الطرق الخمس أولاً.";
         document.getElementById("lesson").scrollIntoView({ behavior: "smooth" });
       });
     }
@@ -543,7 +537,7 @@
     document.getElementById("to-exam").hidden = false;
     document.getElementById("exam").hidden = true;
     state.readPercent = 100;
-    document.getElementById("ready").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("to-exam").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function openExam() {
