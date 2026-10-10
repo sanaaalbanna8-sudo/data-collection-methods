@@ -807,11 +807,7 @@
     var side = document.createElement("div");
     var h = document.createElement("h3");
     h.textContent = pack.grade + " · " + pack.percent + "%";
-    var line = document.createElement("p");
-    line.className = "stats-line";
-    line.textContent = "المدة " + pack.examText + " · النقرات " + pack.clicks + " · تغييرات الإجابة " + pack.answerChanges + " · وقت الشرح " + pack.studyText;
     side.appendChild(h);
-    side.appendChild(line);
     (pack.methodSplit || "").split(" | ").forEach(function (part) {
       if (!part) return;
       var bits = part.split(" ");
@@ -842,12 +838,6 @@
     grid.appendChild(ring);
     grid.appendChild(side);
     card.appendChild(grid);
-
-    var note = document.createElement("p");
-    note.textContent = cloudUrl()
-      ? "أُرسلت النتيجة والأخطاء وعدد النقرات والمدة إلى جدول المعلمة."
-      : "النتيجة محفوظة على هذا المتصفح. ربط جدول المعلمة لم يكتمل بعد.";
-    card.appendChild(note);
 
     var mistakes = (pack.answers || []).filter(function (row) { return row.ok !== "صحيحة"; });
     var title = document.createElement("h3");
