@@ -466,16 +466,25 @@
 
   var unitIndex = 0;
   var studyReady = false;
-  var units = [];
+
+  function methodNodes() {
+    return Array.prototype.slice.call(document.querySelectorAll("#lesson .method"));
+  }
 
   function initUnits() {
-    units = Array.prototype.slice.call(document.querySelectorAll("#lesson .method"));
     var savedUnit = 0;
     try { savedUnit = Number(sessionStorage.getItem("dm-unit") || 0); } catch (err) {}
     if (sessionStorage.getItem("dm-ready") === "1") studyReady = true;
-    document.getElementById("unit-prev").addEventListener("click", function () { showUnit(unitIndex - 1); });
+    document.getElementById("unit-prev").addEventListener("click", function () {
+      showUnit(unitIndex - 1);
+    });
     document.getElementById("unit-next").addEventListener("click", function () {
-      if (unitIndex < units.length - 1) showUnit(unitIndex + 1);
+      var list = methodNodes();
+      var index = unitIndex;
+      list.forEach(function (unit, i) {
+        if (unit.classList.contains("is-current")) index = i;
+      });
+      if (index < list.length - 1) showUnit(index + 1);
       else showReady();
     });
     document.getElementById("ready-yes").addEventListener("click", openExam);
@@ -516,37 +525,37 @@
   }
 
   function showUnit(index) {
-    if (!units.length) return;
-    unitIndex = Math.max(0, Math.min(units.length - 1, index));
+    var list = methodNodes();
+    if (!list.length) return;
+    unitIndex = Math.max(0, Math.min(list.length - 1, index));
     var reviewing = !!(state.examStart || state.phase === "result");
     if (!reviewing) {
       studyReady = false;
       try { sessionStorage.removeItem("dm-ready"); } catch (err) {}
     }
     try { sessionStorage.setItem("dm-unit", String(unitIndex)); } catch (err2) {}
-    units.forEach(function (unit, i) {
-      var on = i === unitIndex;
-      unit.classList.toggle("is-current", on);
-      unit.style.display = on ? "grid" : "none";
+    list.forEach(function (unit, i) {
+      unit.classList.toggle("is-current", i === unitIndex);
+      unit.style.removeProperty("display");
     });
     document.getElementById("ready").hidden = true;
     document.getElementById("compass").hidden = true;
     document.getElementById("exam").hidden = true;
     document.getElementById("unit-bar").hidden = false;
-    document.getElementById("unit-count").textContent = "الطريقة " + (unitIndex + 1) + " من " + units.length;
+    document.getElementById("unit-count").textContent = "الطريقة " + (unitIndex + 1) + " من " + list.length;
     document.getElementById("unit-prev").disabled = unitIndex === 0;
     var next = document.getElementById("unit-next");
-    next.textContent = unitIndex === units.length - 1 ? "أنهيت القراءة" : "الطريقة التالية";
-    var seen = Math.round(((unitIndex + 1) / units.length) * 100);
+    next.textContent = unitIndex === list.length - 1 ? "أنهيت القراءة" : "الطريقة التالية";
+    var seen = Math.round(((unitIndex + 1) / list.length) * 100);
     if (seen > state.readPercent) state.readPercent = seen;
-    document.getElementById("lesson").scrollIntoView({ behavior: "smooth", block: "start" });
+    list[unitIndex].scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function showReady() {
     studyReady = false;
-    units.forEach(function (unit) {
+    methodNodes().forEach(function (unit) {
       unit.classList.remove("is-current");
-      unit.style.display = "none";
+      unit.style.removeProperty("display");
     });
     document.getElementById("unit-bar").hidden = true;
     document.getElementById("ready").hidden = false;
@@ -559,9 +568,9 @@
   function openExam() {
     studyReady = true;
     try { sessionStorage.setItem("dm-ready", "1"); } catch (err) {}
-    units.forEach(function (unit) {
+    methodNodes().forEach(function (unit) {
       unit.classList.remove("is-current");
-      unit.style.display = "none";
+      unit.style.removeProperty("display");
     });
     document.getElementById("unit-bar").hidden = true;
     document.getElementById("ready").hidden = true;

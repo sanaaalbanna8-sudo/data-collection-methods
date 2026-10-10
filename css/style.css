@@ -137,9 +137,15 @@ h1 { font-size: clamp(1.8rem, 3vw, 3rem); }
 
 .lesson { padding: 20px 0 10px; }
 .section-head { max-width: 680px; margin: 28px 0 18px; }
-.method { display: none; }
-.method.is-current { display: grid; }
-.unit-bar { margin: 8px 0 18px; }
+.method { display: none !important; scroll-margin-top: 88px; }
+.method.is-current { display: grid !important; }
+.unit-bar {
+  margin: 8px 0 28px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: rgba(255, 253, 249, 0.92);
+  border: 1px solid var(--line);
+}
 .method {
   margin: 18px 0 54px;
   background: rgba(255, 253, 249, 0.72);
